@@ -2,10 +2,10 @@ import Papa from "papaparse";
 
 /**
  * loadCSV(url) => Promise<rowsArray>
- * expects CSV placed in /data-to-visualize/Electric_Vehicle_Population_Data.csv
+ * expects CSV placed in /public/data-to-visualize/Electric_Vehicle_Population_Data.csv
  */
 export function loadCSV(
-  url = "/data-to-visualize/Electric_Vehicle_Population_Data.csv"
+  url = "/public/data-to-visualize/Electric_Vehicle_Population_Data.csv"
 ) {
   return new Promise((resolve, reject) => {
     Papa.parse(url, {
