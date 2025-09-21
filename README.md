@@ -1,5 +1,5 @@
 # MapUp - Analytics Dashboard Assessment
-### [Live Url](https://analytics-dashboard-assessment-coral.vercel.app/)
+### [Live Deployed Url](https://analytics-dashboard-assessment-coral.vercel.app/)
 
 ## Overview
 
