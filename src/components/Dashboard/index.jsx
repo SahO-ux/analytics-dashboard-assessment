@@ -191,7 +191,7 @@ export default function Dashboard() {
       </div>
 
       <div className="mt-6 bg-white rounded p-4 shadow">
-        {`Raw data preview (All ${fmt.format(data.length || 0)} rows`}
+        {`Raw data preview (All ${fmt.format(data.length || 0)} rows)`}
         <div className="mt-2">
           <DataGridView data={data} />
         </div>

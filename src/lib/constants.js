@@ -42,13 +42,24 @@ const rsStyles = {
 };
 
 const defaultColumns = () => [
-  { key: "VIN (1-10)", name: "VIN", width: 140 },
-  { key: "Make", name: "Make", width: 140 },
+  { key: "VIN (1-10)", name: "VIN", width: 140, frozen: true },
+  { key: "Make", name: "Make", width: 140, frozen: true },
   { key: "Model", name: "Model", width: 220 },
   { key: "Model Year", name: "Year", width: 90 },
   { key: "Electric Vehicle Type", name: "Type", width: 220 },
-  { key: "Electric Range", name: "Range (mi)", width: 110 },
-  { key: "Base MSRP", name: "MSRP", width: 120 },
+  {
+    key: "Electric Range",
+    name: "Range (mi)",
+    width: 110,
+    renderCell: ({ row }) =>
+      row["Electric Range"] ? row["Electric Range"] : "-",
+  },
+  {
+    key: "Base MSRP",
+    name: "MSRP",
+    width: 120,
+    renderCell: ({ row }) => (row["Base MSRP"] ? row["Base MSRP"] : "-"),
+  },
   { key: "State", name: "State", width: 90 },
   { key: "City", name: "City", width: 140 },
 ];
