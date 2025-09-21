@@ -196,7 +196,7 @@ const DataGridView = ({ data = [] }) => {
 
       <div className="text-sm text-slate-500 mb-2">
         <span className="text-sm text-slate-500 mr-3">
-          Showing <strong>{sortedRows.length.toLocaleString()}</strong> rows
+          Showing <strong>{sortedRows.length.toLocaleString()}</strong> results
         </span>
         <button
           type="button"
