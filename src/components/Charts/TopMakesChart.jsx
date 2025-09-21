@@ -9,8 +9,7 @@ import {
   Cell,
 } from "recharts";
 
-import { COLORS } from "../../lib/colors";
-import { MAX_MAKES_IN_CHART } from "../../lib/constants";
+import { COLORS, MAX_MAKES_IN_CHART } from "../../lib/constants";
 
 function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
   // reverse for vertical chart so largest is top

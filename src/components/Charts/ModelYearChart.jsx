@@ -9,7 +9,7 @@ import {
   Cell,
 } from "recharts";
 
-import { COLORS } from "../../lib/colors";
+import { COLORS } from "../../lib/constants";
 
 export default function ModelYearChart({ data = [], isFiltered = false }) {
   const series = useMemo(() => {

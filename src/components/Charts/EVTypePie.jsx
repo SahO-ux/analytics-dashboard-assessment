@@ -8,8 +8,7 @@ import {
   Legend,
 } from "recharts";
 
-import { COLORS } from "../../lib/colors";
-import { fmt } from "../../lib/constants";
+import { COLORS, fmt } from "../../lib/constants";
 import TooltipIcon from "../Common/TooltipIcon";
 
 export default function EVTypePie({ data = [], isFiltered = false }) {
