@@ -10,6 +10,7 @@ import {
 } from "recharts";
 
 import { COLORS, fmt, MAX_MAKES_IN_CHART } from "../../lib/constants";
+import TooltipIcon from "../Common/TooltipIcon";
 
 function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
   // reverse for vertical chart so largest is top
@@ -47,7 +48,10 @@ function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
   // chart mode
   return (
     <div className="bg-white p-4 rounded shadow">
-      <h3 className="text-sm font-medium mb-2">Top Makes</h3>
+      <h3 className="text-sm font-medium mb-2">
+        Top Makes{"  "}
+        <TooltipIcon text="Click any bar below to filter the dashboard." />
+      </h3>
       <div style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>
           <BarChart layout="vertical" data={chartData}>
@@ -88,9 +92,6 @@ function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </div>
-      <div className="mt-2 text-xs text-slate-500">
-        Tip: Click a make to filter the dashboard.
       </div>
     </div>
   );

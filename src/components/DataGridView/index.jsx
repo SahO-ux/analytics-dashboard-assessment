@@ -194,19 +194,27 @@ const DataGridView = ({ data = [] }) => {
         </div>
       </div>
 
-      <div className="text-sm text-slate-500 mb-2">
-        <span className="text-sm text-slate-500 mr-3">
-          Showing <strong>{sortedRows.length.toLocaleString()}</strong> results
-        </span>
-        <button
-          type="button"
-          onClick={() =>
-            downloadCsv(sortedRows, columns, `evs_filtered_${Date.now()}.csv`)
-          }
-          className="px-3 py-1 bg-green-600 text-white rounded font-medium  hover:bg-green-400"
-        >
-          Export CSV
-        </button>
+      <div className="flex items-center justify-between text-sm text-slate-500 mb-2">
+        <div>
+          <span className="mr-3">
+            Showing <strong>{sortedRows.length.toLocaleString()}</strong>{" "}
+            results
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              downloadCsv(sortedRows, columns, `evs_filtered_${Date.now()}.csv`)
+            }
+            className="px-3 py-1 bg-green-600 text-white rounded font-medium hover:bg-green-500"
+          >
+            Export CSV
+          </button>
+        </div>
+
+        {/* hint text */}
+        <div className="text-md text-slate-400 italic">
+          Tip: Click headers to sort, drag edges to resize
+        </div>
       </div>
 
       <div>
