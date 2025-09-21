@@ -6,6 +6,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 
 import TooltipIcon from "../Common/TooltipIcon";
@@ -74,6 +75,7 @@ const RangeMsrpScatter = ({ data = [] }) => {
       x: d["Electric Range"],
       y: d["Base MSRP"],
       model: d.Model,
+      type: d["Electric Vehicle Type"],
     }));
   }, [data]);
 
@@ -103,7 +105,28 @@ const RangeMsrpScatter = ({ data = [] }) => {
               content={<CustomTooltip />}
               cursor={{ strokeDasharray: "3 3" }}
             />
-            <Scatter data={points} fill="#2563eb" shape={CustomDot} />
+            <Legend
+              verticalAlign="top"
+              height={28}
+              iconSize={12}
+              wrapperStyle={{ paddingRight: 20 }}
+            />
+            <Scatter
+              data={points.filter(
+                (p) => p.type === "Battery Electric Vehicle (BEV)"
+              )}
+              fill="#22c55e"
+              name="BEV"
+              shape={CustomDot}
+            />
+            <Scatter
+              data={points.filter(
+                (p) => p.type === "Plug-in Hybrid Electric Vehicle (PHEV)"
+              )}
+              fill="#3b82f6"
+              name="PHEV"
+              shape={CustomDot}
+            />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
