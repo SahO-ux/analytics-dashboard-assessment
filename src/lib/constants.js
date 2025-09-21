@@ -41,4 +41,59 @@ const rsStyles = {
   singleValue: (provided) => ({ ...provided, fontSize: 14 }),
 };
 
-export { viewOptions, rsStyles, MAX_MAKES_IN_CHART, fmt, COLORS };
+const defaultColumns = () => [
+  { key: "VIN (1-10)", name: "VIN", width: 140 },
+  { key: "Make", name: "Make", width: 140 },
+  { key: "Model", name: "Model", width: 220 },
+  { key: "Model Year", name: "Year", width: 90 },
+  { key: "Electric Vehicle Type", name: "Type", width: 220 },
+  { key: "Electric Range", name: "Range (mi)", width: 110 },
+  { key: "Base MSRP", name: "MSRP", width: 120 },
+  { key: "State", name: "State", width: 90 },
+  { key: "City", name: "City", width: 140 },
+];
+
+const rowsToCsv = (rows, columns) => {
+  if (!rows || !rows.length) return "";
+  const header = columns
+    .map((c) => `"${(c.name || c.key).replace(/"/g, '""')}"`)
+    .join(",");
+  const lines = rows.map((r) =>
+    columns
+      .map((c) => {
+        const v = r[c.key];
+        if (v == null) return '""';
+        return `"${String(v).replace(/"/g, '""')}"`;
+      })
+      .join(",")
+  );
+  return [header, ...lines].join("\n");
+};
+
+const downloadCsv = (rows, columns, filename = "export.csv") => {
+  const csv = rowsToCsv(rows, columns);
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+};
+
+const escapeRegexSearchTerm = (term = "") => {
+  return term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
+
+export {
+  viewOptions,
+  rsStyles,
+  MAX_MAKES_IN_CHART,
+  fmt,
+  COLORS,
+  downloadCsv,
+  escapeRegexSearchTerm,
+  defaultColumns,
+};

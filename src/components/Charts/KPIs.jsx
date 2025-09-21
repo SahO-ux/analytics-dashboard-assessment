@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useRef } from "react";
+import { useMemo, useState, useEffect, useRef, memo } from "react";
 
 import { fmt } from "../../lib/constants";
 import TooltipIcon from "../Common/TooltipIcon";
@@ -30,7 +30,7 @@ const KPICard = ({ label, value, hint, isFiltered, flash = false, title }) => {
   );
 };
 
-export default function KPIs({ data = [], isFiltered = false }) {
+const KPIs = ({ data = [], isFiltered = false }) => {
   // flash state: when isFiltered toggles, briefly flash KPI cards
   const prevFilteredRef = useRef(isFiltered);
   const [flash, setFlash] = useState(false);
@@ -132,4 +132,6 @@ export default function KPIs({ data = [], isFiltered = false }) {
       />
     </div>
   );
-}
+};
+
+export default memo(KPIs);

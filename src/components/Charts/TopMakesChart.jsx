@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import {
   BarChart,
   Bar,
@@ -9,7 +9,7 @@ import {
   Cell,
 } from "recharts";
 
-import { COLORS, MAX_MAKES_IN_CHART } from "../../lib/constants";
+import { COLORS, fmt, MAX_MAKES_IN_CHART } from "../../lib/constants";
 
 function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
   // reverse for vertical chart so largest is top
@@ -34,7 +34,9 @@ function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
                   {m.make}
                 </button>
               </div>
-              <div className="text-sm text-slate-500">{m.count}</div>
+              <div className="text-sm text-slate-500">
+                {fmt.format(m.count || 0)}
+              </div>
             </div>
           ))}
         </div>
@@ -51,7 +53,13 @@ function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
           <BarChart layout="vertical" data={chartData}>
             <XAxis type="number" />
             <YAxis dataKey="make" type="category" width={140} />
-            <Tooltip />
+            <Tooltip
+              formatter={(value) => [
+                `${fmt.format(value || 0)} vehicles`,
+                "Count",
+              ]}
+              labelFormatter={(label) => `Make: ${label}`}
+            />
             <Bar dataKey="count">
               {chartData.map((entry, idx) => {
                 const isSelected = selectedMake && selectedMake === entry.make;
@@ -88,4 +96,4 @@ function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
   );
 }
 
-export default React.memo(TopMakesChartComp);
+export default memo(TopMakesChartComp);

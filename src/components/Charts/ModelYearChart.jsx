@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import {
   BarChart,
   Bar,
@@ -9,9 +9,9 @@ import {
   Cell,
 } from "recharts";
 
-import { COLORS } from "../../lib/constants";
+import { COLORS, fmt } from "../../lib/constants";
 
-export default function ModelYearChart({ data = [], isFiltered = false }) {
+const ModelYearChart = ({ data = [], isFiltered = false }) => {
   const series = useMemo(() => {
     const counts = {};
     data.forEach((r) => {
@@ -35,7 +35,10 @@ export default function ModelYearChart({ data = [], isFiltered = false }) {
             <XAxis dataKey="year" name="Year" tick={{ fontSize: 12 }} />
             <YAxis />
             <Tooltip
-              formatter={(value) => [`${value} vehicles`, "Count"]}
+              formatter={(value) => [
+                `${fmt.format(value || 0)} vehicles`,
+                "Count",
+              ]}
               labelFormatter={(label) => `Year: ${label}`}
             />
             <Bar dataKey="count" name="Count">
@@ -51,4 +54,6 @@ export default function ModelYearChart({ data = [], isFiltered = false }) {
       </div>
     </div>
   );
-}
+};
+
+export default memo(ModelYearChart);

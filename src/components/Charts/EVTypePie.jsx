@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import {
   PieChart,
   Pie,
@@ -11,7 +11,7 @@ import {
 import { COLORS, fmt } from "../../lib/constants";
 import TooltipIcon from "../Common/TooltipIcon";
 
-export default function EVTypePie({ data = [], isFiltered = false }) {
+const EVTypePie = ({ data = [], isFiltered = false }) => {
   const series = useMemo(() => {
     const counts = {};
     data.forEach((r) => {
@@ -64,4 +64,6 @@ export default function EVTypePie({ data = [], isFiltered = false }) {
       </div>
     </div>
   );
-}
+};
+
+export default memo(EVTypePie);

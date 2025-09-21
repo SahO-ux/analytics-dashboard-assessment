@@ -1,5 +1,12 @@
-import { useEffect, useState, useMemo, useTransition } from "react";
+import {
+  useEffect,
+  useState,
+  useMemo,
+  useTransition,
+  useCallback,
+} from "react";
 import Select from "react-select";
+import _ from "lodash";
 
 import { loadCSV } from "../../lib/loadCSV";
 import DashboardHeaderSection from "./DashboardHeaderSection";
@@ -7,7 +14,8 @@ import TopMakesChart from "../Charts/TopMakesChart";
 import RangeMsrpScatter from "../Charts/RangeMsrpScatter";
 import InlineLoader from "../Common/InlineLoader";
 import FilterStroke from "../Common/FilterStroke";
-import { rsStyles, viewOptions } from "../../lib/constants";
+import { fmt, rsStyles, viewOptions } from "../../lib/constants";
+import DataGridView from "../DataGridView";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -18,6 +26,15 @@ export default function Dashboard() {
   const [makeSearch, setMakeSearch] = useState("");
 
   const [isPending, startTransition] = useTransition();
+
+  // debounce handler
+  const debouncedMakeSearch = useCallback(
+    _.debounce((value) => {
+      // setDebouncedFilter(value.trim().toLowerCase());
+      setMakeSearch(value.trim().toLowerCase());
+    }, 500),
+    []
+  );
 
   const makesSorted = useMemo(() => {
     const counts = {};
@@ -95,7 +112,9 @@ export default function Dashboard() {
     <div className="p-6 max-w-6xl mx-auto">
       <header className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">MapUp — EV Population Dashboard</h1>
-        <div className="text-sm text-gray-500">Rows: {data.length}</div>
+        <div className="text-sm text-gray-500">
+          Total EVs: {fmt.format(data.length || 0)}
+        </div>
       </header>
 
       {/* Show filter status */}
@@ -147,14 +166,13 @@ export default function Dashboard() {
                 value={viewOptions.find((o) => o.value === makesView)}
                 onChange={(opt) => setMakesView(opt.value)}
                 styles={rsStyles}
-                isSearchable={false}
+                isSearchable={true}
                 aria-label="Select Top N makes"
               />
             </div>
 
             <input
-              value={makeSearch}
-              onChange={(e) => setMakeSearch(e.target.value)}
+              onChange={(e) => debouncedMakeSearch(e.target.value)}
               placeholder="Search makes..."
               className="ml-4 px-2 py-1 border rounded text-sm"
             />
@@ -173,46 +191,10 @@ export default function Dashboard() {
       </div>
 
       <div className="mt-6 bg-white rounded p-4 shadow">
-        <details>
-          <summary className="cursor-pointer">
-            Raw data preview (first 50 rows)
-          </summary>
-          <div className="overflow-auto mt-2">
-            <table className="min-w-full text-sm">
-              <thead className="text-left text-xs text-gray-500">
-                <tr>
-                  <th>VIN</th>
-                  <th>Make</th>
-                  <th>Model</th>
-                  <th>Year</th>
-                  <th>Type</th>
-                  <th>Range</th>
-                  <th>MSRP</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.slice(0, 50).map((r, idx) => (
-                  <tr
-                    key={
-                      r["VIN (1-10)"]
-                        ? `${r["VIN (1-10)"]}-${idx}`
-                        : `row-${idx}`
-                    }
-                    className="border-t"
-                  >
-                    <td>{r["VIN (1-10)"]}</td>
-                    <td>{r.Make}</td>
-                    <td>{r.Model}</td>
-                    <td>{r["Model Year"]}</td>
-                    <td>{r["Electric Vehicle Type"]}</td>
-                    <td>{r["Electric Range"]}</td>
-                    <td>{r["Base MSRP"]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </details>
+        {`Raw data preview (All ${fmt.format(data.length || 0)} rows`}
+        <div className="mt-2">
+          <DataGridView data={data} />
+        </div>
       </div>
     </div>
   );
