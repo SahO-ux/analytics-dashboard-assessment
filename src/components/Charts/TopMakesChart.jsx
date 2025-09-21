@@ -93,6 +93,9 @@ function TopMakesChartComp({ makesList = [], onSelectMake, selectedMake }) {
           </BarChart>
         </ResponsiveContainer>
       </div>
+      <div className="mt-2 text-xs text-slate-500">
+        Tip: Click a make to filter the dashboard.
+      </div>
     </div>
   );
 }
