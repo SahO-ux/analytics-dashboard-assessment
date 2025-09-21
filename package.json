@@ -13,8 +13,9 @@
     "papaparse": "^5.5.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hot-toast": "^2.6.0",
     "react-is": "^19.1.1",
+    "react-select": "^5.10.2",
+    "react-tooltip": "^5.29.1",
     "recharts": "^3.2.1"
   },
   "devDependencies": {

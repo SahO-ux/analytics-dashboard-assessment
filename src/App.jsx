@@ -1,7 +1,14 @@
+import { Tooltip } from "react-tooltip";
+
+import Dashboard from "./components/Dashboard";
+import "react-tooltip/dist/react-tooltip.css";
+
 function App() {
   return (
     <>
-      <h1>WELCOME</h1>
+      <Dashboard />
+      {/* Global tooltip */}
+      <Tooltip id="app-tooltip" place="top" effect="solid" />
     </>
   );
 }
